@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16
+    container_name: datapilot-db
+    environment:
+      POSTGRES_USER: datapilot
+      POSTGRES_PASSWORD: datapilot_dev_password
+      POSTGRES_DB: datapilot
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U datapilot -d datapilot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
